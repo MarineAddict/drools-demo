@@ -1,0 +1,9 @@
+#目录
+/bin
+/.settings
+#文件
+.classpath
+.project
+.idea/
+droolsdemo.iml
+target/
