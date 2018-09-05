@@ -1,0 +1,7 @@
+package drool.test;
+rule "test"
+when
+     
+then
+
+end

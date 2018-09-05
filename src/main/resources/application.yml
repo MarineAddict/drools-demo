@@ -1,0 +1,18 @@
+server:
+  port: 5050
+  context-path: /
+
+spring:
+  application:
+  name: drools
+  thymeleaf:
+    cache: false
+    prefix: classpath:/static/pages/
+    check-template-location: true
+    suffix: .html
+    encoding: UTF-8
+    content-type: text/html
+    mode: HTML5
+
+file:
+  basePath: /drool/
