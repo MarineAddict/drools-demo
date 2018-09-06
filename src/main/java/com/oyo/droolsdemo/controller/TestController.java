@@ -1,5 +1,6 @@
 package com.oyo.droolsdemo.controller;
 
+import com.oyo.droolsdemo.entity.model.Customer;
 import com.oyo.droolsdemo.entity.request.DroolsData;
 import com.oyo.droolsdemo.service.DroolsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,14 @@ public class TestController {
     };
 
 
+    @RequestMapping("/testDroolExecution")
+    @ResponseBody
+    public void testDroolExecution(){
+        Customer customer=new Customer();
+        customer.setVip(true);
+        customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
+        droolsService.testDrool("ksession-rules",customer);
+    }
 
 
 }

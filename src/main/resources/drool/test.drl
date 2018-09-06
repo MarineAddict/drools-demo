@@ -1,7 +1,11 @@
 package drool.test;
-rule "test"
-when
-     
-then
 
+import  com.oyo.droolsdemo.entity.model.*
+
+rule "test"
+
+when
+     $customer: Customer(vip==true,comsumptionLevel==Customer.ComsumptionLevel.HIGH)
+then
+     System.out.println("this is the person i am looking for");
 end

@@ -1,6 +1,10 @@
 package com.oyo.droolsdemo.service;
 
+import com.oyo.droolsdemo.entity.model.Customer;
 import com.oyo.droolsdemo.entity.request.DroolsData;
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -69,6 +73,16 @@ public class DroolsService {
             }
         }
     }
+
+    public void testDrool(String sessionName,Object obj){
+        KieServices ks = KieServices.Factory.get();
+        KieContainer kc = ks.getKieClasspathContainer("drool");
+        KieSession ksession = kc.newKieSession(sessionName);
+        ksession.insert(obj);
+        ksession.fireAllRules();
+
+    }
+
 
 
     }
