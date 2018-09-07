@@ -43,5 +43,18 @@ public class TestController {
         droolsService.testDrool("ksession-rules",customer);
     }
 
+    @RequestMapping("/testDroolExecutionBatch")
+    @ResponseBody
+    public void testDroolExecutionBatch(){
+        Customer customer=new Customer();
+        customer.setVip(true);
+        customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
+        droolsService.testDrool("ksession-rules",customer);
+    }
+
+
+
+
+
 
 }

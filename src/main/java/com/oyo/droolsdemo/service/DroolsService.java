@@ -1,10 +1,15 @@
 package com.oyo.droolsdemo.service;
 
-import com.oyo.droolsdemo.entity.model.Customer;
 import com.oyo.droolsdemo.entity.request.DroolsData;
 import org.kie.api.KieServices;
+import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.internal.builder.KnowledgeBuilder;
+import org.kie.internal.builder.KnowledgeBuilderErrors;
+import org.kie.internal.builder.KnowledgeBuilderFactory;
+import org.kie.internal.io.ResourceFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -24,6 +29,8 @@ public class DroolsService {
     public final static String separator= System.getProperty("line.separator");
     public final static String blank="\b";
 
+    @Autowired
+    private KieContainer kc;
 
     private String baseRoot=DroolsService.class.getClassLoader().getResource("drool").getPath();
 
@@ -31,17 +38,20 @@ public class DroolsService {
      * 生成drl文件
      * @param
      */
-    public void generateDrlFile(DroolsData droolsData)  {
+    public String generateDrlFile(DroolsData droolsData)  {
 
         if(droolsData.getRule()==null||"".equals(droolsData.getRule())){
-            return;
+            return "EMPTY NAME IS INVALID";
         }
         FileWriter fw=null;
+        String fileName=null;
         try {
-        String fileName=baseRoot+"/"+droolsData.getDroolFileName()+".drl";
+         fileName=baseRoot+"/"+droolsData.getDroolFileName()+".drl";
         File file= ResourceUtils.getFile(fileName);
         if(!file.exists()){
             file.createNewFile();
+        }else{
+            return "FILE ALREADY EXISTS";
         }
             fw=new FileWriter(fileName);
             fw.write(droolsData.getPackageTitle());
@@ -67,21 +77,40 @@ public class DroolsService {
             }
         }finally {
             try {
-                fw.close();
+                if(fw!=null) {
+                    fw.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+       String result= verifyCompiledDrl(fileName);
+        if(result!=null){
+            System.out.println(result);
+        }
+        return "SUCCESS";
     }
 
+    public String verifyCompiledDrl(String fileName){
+        KnowledgeBuilder knowledgeBuilder= KnowledgeBuilderFactory.newKnowledgeBuilder();
+        knowledgeBuilder.add(ResourceFactory.newFileResource(fileName), ResourceType.DRL);
+        KnowledgeBuilderErrors errors = knowledgeBuilder.getErrors();
+        if(errors.size()>0){
+            return errors.toString();
+        }
+        return null;
+    }
+
+
+
     public void testDrool(String sessionName,Object obj){
-        KieServices ks = KieServices.Factory.get();
-        KieContainer kc = ks.getKieClasspathContainer("drool");
         KieSession ksession = kc.newKieSession(sessionName);
         ksession.insert(obj);
         ksession.fireAllRules();
-
+        ksession.dispose();
     }
+
+
 
 
 
