@@ -29,6 +29,7 @@ import java.util.List;
 public class DrlGeneratorConfig {
 
     private List<String> kieBaseList=new ArrayList<String>();
+    String  scanRoot = this.getClass().getClassLoader().getResource("drool").getPath();
 
     @Bean
     public KieContainer kieContainer(){
@@ -36,7 +37,6 @@ public class DrlGeneratorConfig {
         //create a Kmodule
         KieModuleModel kieModuleModel = ks.newKieModuleModel();
 
-        String  scanRoot = this.getClass().getClassLoader().getResource("drool").getPath();
         insertKieBase(scanRoot);
         //add new kiebase based on his package name (this is to add packages ristrictions to
         // kiebase so that kie-session will execute drl with his package)
@@ -46,12 +46,33 @@ public class DrlGeneratorConfig {
         kfs.writeKModuleXML(kieModuleModel.toXML());
 
         //add the resource drl to this file system
-        kfs.write(ResourceFactory.newClassPathResource("drool/login/login_rule.drl").setResourceType(ResourceType.DRL));
+        addDrlFiles(kfs,scanRoot);
+
         /**everything (module,model,session,drl source) has been added into the service,
          build KieFileSystem and create a container*/
         ks.newKieBuilder( kfs ).buildAll();
         KieContainer kieContainer = ks.newKieContainer(ks.getRepository().getDefaultReleaseId());
         return kieContainer;
+    }
+
+    /**
+     * 添加所有的drl文件进入filesystem
+     * @param kfs
+     */
+    private void addDrlFiles(KieFileSystem kfs,String root) {
+        File folder=new File(root);
+        File[] files=folder.listFiles();
+        for(File file:files){
+            if(file.isFile()&&file.getName().endsWith(".drl")){
+
+                String str=this.getClass().getClassLoader().getResource("").getPath().replaceAll("/","\\\\");
+                String path=file.getPath().replaceAll(str.replaceAll("\\\\","\\\\\\\\").substring(2),"");
+                kfs.write(ResourceFactory.newClassPathResource(path.replaceAll("\\\\","\\/")).setResourceType(ResourceType.DRL));
+            }else{
+                addDrlFiles(kfs,file.getPath());
+
+            }
+        }
     }
 
     /**
@@ -99,7 +120,6 @@ public class DrlGeneratorConfig {
         for(File file:files){
             if(file.isDirectory()){
                 kieBaseList.add(file.getName());
-
             }
         }
     }
