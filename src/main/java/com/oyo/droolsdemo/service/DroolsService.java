@@ -35,7 +35,7 @@ public class DroolsService {
     private String baseRoot=DroolsService.class.getClassLoader().getResource("drool").getPath();
 
     /**
-     * 生成drl文件
+     * 生成drl文件（如果文件存在，直接在文件下 继续书写）
      * @param
      */
     public String generateDrlFile(DroolsData droolsData)  {
@@ -91,6 +91,11 @@ public class DroolsService {
         return "SUCCESS";
     }
 
+    /**
+     * 验证语法
+     * @param fileName
+     * @return
+     */
     public String verifyCompiledDrl(String fileName){
         KnowledgeBuilder knowledgeBuilder= KnowledgeBuilderFactory.newKnowledgeBuilder();
         knowledgeBuilder.add(ResourceFactory.newFileResource(fileName), ResourceType.DRL);
@@ -102,7 +107,11 @@ public class DroolsService {
     }
 
 
-
+    /**
+     * 调用drools规则
+     * @param sessionName drool的session名称
+     * @param obj 对象
+     */
     public void testDrool(String sessionName,Object obj){
         KieSession ksession = kc.newKieSession(sessionName);
         ksession.insert(obj);

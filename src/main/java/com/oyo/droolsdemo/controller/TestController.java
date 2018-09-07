@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/drools")
 public class TestController {
 
+
     @Autowired
     private DroolsService droolsService;
 
@@ -40,7 +41,7 @@ public class TestController {
         Customer customer=new Customer();
         customer.setVip(true);
         customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
-        droolsService.testDrool("ksession-rules",customer);
+        droolsService.testDrool("login",customer);
     }
 
     @RequestMapping("/testDroolExecutionBatch")

@@ -1,0 +1,21 @@
+package  drool.login
+
+import  com.oyo.droolsdemo.entity.model.*
+
+rule "login"
+
+when
+ $cus: Customer(vip==true,comsumptionLevel==Customer.ComsumptionLevel.HIGH)
+then
+$cus.setVip(false);
+ update($cus)
+ System.out.println($cus.getName()+"is the person i want is vip");
+ end
+
+rule "login2"
+
+when
+  $cus: Customer(vip==false,comsumptionLevel==Customer.ComsumptionLevel.HIGH)
+then
+  System.out.println($cus.getName()+"is the person i want not vip");
+ end
