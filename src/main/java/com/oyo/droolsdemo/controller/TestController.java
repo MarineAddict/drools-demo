@@ -40,6 +40,7 @@ public class TestController {
     public void testDroolExecution(){
         Customer customer=new Customer();
         customer.setVip(true);
+        customer.setDeposit(30002.0);
         customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
         droolsService.testDrool("login",customer);
     }

@@ -1,0 +1,14 @@
+package  drool.login
+
+import  com.oyo.droolsdemo.entity.request.test.*
+import  com.oyo.droolsdemo.entity.model.risk.*
+import  com.oyo.droolsdemo.common.DateUtil.*
+
+
+rule "login_time_risk"
+
+when
+  $req: BaseRequest(riskLevel==RiskLevelEnum)
+then
+
+ end

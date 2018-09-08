@@ -64,7 +64,6 @@ public class DrlGeneratorConfig {
         File[] files=folder.listFiles();
         for(File file:files){
             if(file.isFile()&&file.getName().endsWith(".drl")){
-
                 String str=this.getClass().getClassLoader().getResource("").getPath().replaceAll("/","\\\\");
                 String path=file.getPath().replaceAll(str.replaceAll("\\\\","\\\\\\\\").substring(2),"");
                 kfs.write(ResourceFactory.newClassPathResource(path.replaceAll("\\\\","\\/")).setResourceType(ResourceType.DRL));

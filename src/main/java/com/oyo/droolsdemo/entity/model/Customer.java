@@ -33,10 +33,13 @@ public class Customer {
     private ComsumptionLevel comsumptionLevel;
 
 
+
+
    public enum ComsumptionLevel{
         LOW,
         MEDIUM,
         HIGH
     }
+
 
 }
