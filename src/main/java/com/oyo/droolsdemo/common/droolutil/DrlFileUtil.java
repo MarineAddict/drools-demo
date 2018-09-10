@@ -12,9 +12,10 @@ import java.io.IOException;
  * @author: create by xuqie
  * @description:
  * @date:2018/9/10
+ * drl文件操作类
  */
 public class DrlFileUtil {
-    public final static String PACKAGESTARTER="drool";
+    public final static String PACKAGESTARTER="drool.";
     public final static String SEPARATOR = System.getProperty("line.separator");
     public final static String BLANK ="\b";
 
@@ -31,9 +32,11 @@ public class DrlFileUtil {
      */
     public static String generateDrlFile(DroolsData droolsData)  {
 
+        // 文件的rule 名称判断
         if(droolsData.getRule()==null||"".equals(droolsData.getRule())){
             return "EMPTY NAME IS INVALID";
         }
+        //包名必须drool开头，否则无法生成到对应的位置
         if(!droolsData.getPackage().startsWith(PACKAGESTARTER)){
             return "PACKAGENAME SHOULD START WITH \"drool\"";
         }
@@ -43,6 +46,7 @@ public class DrlFileUtil {
         try {
             file = ResourceUtils.getFile(filePath);
         if(!file.exists()){
+                //创建文件操作
                 file.getParentFile().mkdirs();
                 file.createNewFile();
             }

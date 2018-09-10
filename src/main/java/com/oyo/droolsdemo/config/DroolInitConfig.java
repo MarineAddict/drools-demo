@@ -21,13 +21,23 @@ import java.util.List;
  * @author: create by xuqie
  * @description:
  * @date:2018/9/5
+ * drool 容器的启动配置项
  */
 @Configuration
 public class DroolInitConfig {
 
+    /**
+     * 记录所有的Kbase的List，resource下的drool文件夹下的package即为一个Kbase的名称
+     */
     private List<String> kieBaseList=new ArrayList<String>();
     String  scanRoot = this.getClass().getClassLoader().getResource("drool").getPath();
 
+    /**
+     * 通过初始化得到一个KieService,KieService是配置一个KieFileSystem的基本操作接口。
+     * bean中会配置KieModule,KieBase，KieSession，并自动扫描加载drl文件为一个KieFileSystem。
+     * 外部通过得到这个Bean 调用 newContainer方法就可以得到经过配置后的一个KieContainer
+     * @return
+     */
     @Bean
     public KieServices kieServices(){
         KieServices ks = KieServices.Factory.get();
@@ -67,7 +77,7 @@ public class DroolInitConfig {
     }
 
     /**
-     *
+     * 给Module配置KieBase，以drool下的packageName+“base”作为KieBase的名称
      * @param kieModuleModel
      */
     private void configKieBase(KieModuleModel kieModuleModel) {
@@ -85,8 +95,12 @@ public class DroolInitConfig {
 
     }
 
+    /**
+     * 配置一个KieSession给KieBase，默认一个Base给一个Session
+     * @param baseModel
+     * @param baseName
+     */
     private void configKieSession(KieBaseModel baseModel,String baseName) {
-
         baseModel.newKieSessionModel(baseName)
                 .setDefault(true)
                 .setType(KieSessionModel.KieSessionType.STATEFUL)
@@ -94,6 +108,10 @@ public class DroolInitConfig {
     }
 
 
+    /**
+     * 扫描所有resource下drool文件夹下的packageName，这是作为Base的标志，也是不同规则库的标识
+     * @param scanRoot
+     */
     private void insertKieBase(String scanRoot){
         //first clear the list to avoid any redundant elements when refreshed
         kieBaseList.clear();

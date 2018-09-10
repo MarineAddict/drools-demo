@@ -26,9 +26,9 @@ public class DroolsService {
 
     /**
      *
-     * 调用drools规则
-     * @param kieSessionName drool的session名称
-     * @param obj 对象
+     * 调用drools规则引擎
+     * @param kieSessionName 调用drool的session名称
+     * @param obj 传入的Fact对象
      */
     public void validateByDrools(String kieSessionName,Object obj){
         KieSession ksession = DroolUtil.getKieSession(kieSessionName);
