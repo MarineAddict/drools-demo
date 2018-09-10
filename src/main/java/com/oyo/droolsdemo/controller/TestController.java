@@ -1,5 +1,7 @@
 package com.oyo.droolsdemo.controller;
 
+import com.oyo.droolsdemo.common.droolutil.DrlFileUtil;
+import com.oyo.droolsdemo.common.droolutil.DroolUtil;
 import com.oyo.droolsdemo.entity.model.Customer;
 import com.oyo.droolsdemo.entity.request.DroolsData;
 import com.oyo.droolsdemo.service.DroolsService;
@@ -22,6 +24,8 @@ public class TestController {
     @Autowired
     private DroolsService droolsService;
 
+    @Autowired
+    private DroolUtil droolUtil;
 
     @RequestMapping("/index")
     public String index(){
@@ -31,7 +35,8 @@ public class TestController {
     @RequestMapping("/demo")
     @ResponseBody
     public void demo(@RequestBody DroolsData droolsData){
-        droolsService.generateDrlFile(droolsData);
+        DrlFileUtil.generateDrlFile(droolsData);
+        DroolUtil.reload();
     };
 
 
@@ -42,17 +47,15 @@ public class TestController {
         customer.setVip(true);
         customer.setDeposit(30002.0);
         customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
-        droolsService.testDrool("login",customer);
+        droolsService.validateByDrools("login",customer);
     }
 
-    @RequestMapping("/testDroolExecutionBatch")
+    @RequestMapping("/testDroolSession")
     @ResponseBody
     public void testDroolExecutionBatch(){
-        Customer customer=new Customer();
-        customer.setVip(true);
-        customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
-        droolsService.testDrool("ksession-rules",customer);
+         DroolUtil.reload();
     }
+
 
 
 

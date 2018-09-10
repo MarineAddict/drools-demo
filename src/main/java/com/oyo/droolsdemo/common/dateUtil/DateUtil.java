@@ -1,4 +1,4 @@
-package com.oyo.droolsdemo.common.DateUtil;
+package com.oyo.droolsdemo.common.dateUtil;
 
 import java.util.Calendar;
 import java.util.Date;

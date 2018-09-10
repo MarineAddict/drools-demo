@@ -26,6 +26,10 @@ public class DroolsData implements Serializable {
 
     private String end;
 
+    public String getPackage(){
+        return packageTitle;
+    }
+
     public String getPackageTitle() {
         return "package "+packageTitle;
     }
