@@ -10,4 +10,18 @@ public enum RiskLevelEnum {
     HIGH,
     MEDIUM,
     LOW;
+
+
+    public  enum LoginRiskLevel{
+        HIGH,
+        MEDIUM,
+        LOW;
+    }
+    public  enum RigisterRiskLevel{
+        HIGH,
+        MEDIUM,
+        LOW;
+    }
+
 }
+

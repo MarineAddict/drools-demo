@@ -108,6 +108,7 @@ public class DroolsService {
 
 
     /**
+     *
      * 调用drools规则
      * @param sessionName drool的session名称
      * @param obj 对象
