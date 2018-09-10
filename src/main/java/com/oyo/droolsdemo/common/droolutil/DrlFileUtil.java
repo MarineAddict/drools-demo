@@ -26,7 +26,7 @@ public class DrlFileUtil {
 
 
     /**
-     * 生成drl文件（如果文件存在，直接在文件下 继续书写）
+     * 生成drl文件
      * @param
      */
     public static String generateDrlFile(DroolsData droolsData)  {
