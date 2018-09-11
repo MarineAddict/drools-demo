@@ -36,7 +36,7 @@ public class TestController {
     @ResponseBody
     public String demo(@RequestBody DroolsData droolsData){
         DrlFileUtil.generateDrlFile(droolsData);
-        DroolUtil.reload();
+        DroolUtil.reloadAll();
         return "sucess";
     };
 

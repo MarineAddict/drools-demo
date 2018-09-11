@@ -1,20 +1,8 @@
 package com.oyo.droolsdemo.service;
 
 import com.oyo.droolsdemo.common.droolutil.DroolUtil;
-import com.oyo.droolsdemo.entity.request.DroolsData;
-import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
-import org.kie.internal.builder.KnowledgeBuilder;
-import org.kie.internal.builder.KnowledgeBuilderErrors;
-import org.kie.internal.builder.KnowledgeBuilderFactory;
-import org.kie.internal.io.ResourceFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * @author: create by xuqie

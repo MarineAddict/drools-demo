@@ -10,6 +10,7 @@ import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.conf.ClockTypeOption;
 import org.kie.internal.io.ResourceFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,6 +32,16 @@ public class DroolInitConfig {
      */
     private List<String> kieBaseList=new ArrayList<String>();
     String  scanRoot = this.getClass().getClassLoader().getResource("drool").getPath();
+    @Autowired
+    private KieServices kieServices;
+
+
+    @Bean
+    public KieServices kieServices(){
+        KieServices ks = KieServices.Factory.get();
+        return ks;
+    }
+
 
     /**
      * 通过初始化得到一个KieService,KieService是配置一个KieFileSystem的基本操作接口。
@@ -39,22 +50,21 @@ public class DroolInitConfig {
      * @return
      */
     @Bean
-    public KieServices kieServices(){
-        KieServices ks = KieServices.Factory.get();
+    public KieFileSystem kieFileSystem(){
         //create a Kmodule
-        KieModuleModel kieModuleModel = ks.newKieModuleModel();
+        KieModuleModel kieModuleModel = kieServices.newKieModuleModel();
         insertKieBase(scanRoot);
         /*add new kiebase based on his package name (this is to add packages ristrictions to
          kiebase so that kie-session will execute drl with his package)*/
         configKieBase(kieModuleModel);
-        KieFileSystem kfs = ks.newKieFileSystem();
+        KieFileSystem kfs = kieServices.newKieFileSystem();
         kfs.writeKModuleXML(kieModuleModel.toXML());
         //add the resource drl to this file system
         addDrlFiles(kfs,scanRoot);
         /**everything (module,model,session,drl source) has been added into the service,
          build KieFileSystem and create a container*/
-        ks.newKieBuilder( kfs ).buildAll();
-        return ks;
+        kieServices.newKieBuilder( kfs ).buildAll();
+        return kfs;
     }
 
     /**
@@ -65,13 +75,14 @@ public class DroolInitConfig {
         File folder=new File(root);
         File[] files=folder.listFiles();
         for(File file:files){
-            if(file.isFile()&&file.getName().endsWith(".drl")){
-                String str=this.getClass().getClassLoader().getResource("").getPath().replaceAll("/","\\\\");
-                String path=file.getPath().replaceAll(str.replaceAll("\\\\","\\\\\\\\").substring(2),"");
-                kfs.write(ResourceFactory.newClassPathResource(path.replaceAll("\\\\","\\/")).setResourceType(ResourceType.DRL));
-            }else{
+            if(file.isFile()){
+                if(file.getName().endsWith(".drl")) {
+                    String str = this.getClass().getClassLoader().getResource("").getPath().replaceAll("/", "\\\\");
+                    String path = file.getPath().replaceAll(str.replaceAll("\\\\", "\\\\\\\\").substring(2), "");
+                    kfs.write(ResourceFactory.newClassPathResource(path.replaceAll("\\\\", "\\/")).setResourceType(ResourceType.DRL));
+                }
+                }else{
                 addDrlFiles(kfs,file.getPath());
-
             }
         }
     }
