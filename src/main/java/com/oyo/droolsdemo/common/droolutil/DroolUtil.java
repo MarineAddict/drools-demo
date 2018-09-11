@@ -2,6 +2,7 @@ package com.oyo.droolsdemo.common.droolutil;
 
 import lombok.Data;
 import org.kie.api.KieServices;
+import org.kie.api.definition.KiePackage;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * @author: create by xuqie
@@ -38,6 +40,10 @@ public class DroolUtil {
     @PostConstruct
     public void initContainer(){
         kieContainer=KieServices.newKieContainer(KieServices.getRepository().getDefaultReleaseId());
+//        List<KiePackage> packages= (List<KiePackage>) kieContainer.getKieBase("").getKiePackages();
+////        for(KiePackage p:packages){
+//         p.getProcesses().clear();
+//        }
         applicationContext=ctx;
         DefaultListableBeanFactory=beanFactory;
     }

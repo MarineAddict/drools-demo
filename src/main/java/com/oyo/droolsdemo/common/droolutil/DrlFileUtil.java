@@ -2,6 +2,7 @@ package com.oyo.droolsdemo.common.droolutil;
 
 import com.oyo.droolsdemo.entity.request.DroolsData;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -69,19 +70,19 @@ public class DrlFileUtil {
         FileWriter fw=null;
         try {
         fw=new FileWriter(filePath);
-        fw.write("// "+droolsData.getComments());
+        fw.write("// "+ droolsData.getComments().trim());
         fw.write(SEPARATOR);
-        fw.write(droolsData.getPackageTitle());
+        fw.write(droolsData.getPackageTitle().trim());
         fw.write(SEPARATOR);
-        fw.write(droolsData.getImportTile());
+        fw.write(droolsData.getImportTile().trim());
         fw.write(SEPARATOR);
-        fw.write(droolsData.getRule());
+        fw.write(droolsData.getRule().trim());
         fw.write(SEPARATOR);
-        fw.write(droolsData.getWhenString());
+        fw.write(droolsData.getWhenString().trim());
         fw.write(SEPARATOR);
-        fw.write(droolsData.getThenString());
+        fw.write(droolsData.getThenString().trim());
         fw.write(SEPARATOR);
-        fw.write(droolsData.getEnd());
+        fw.write(droolsData.getEnd().trim());
         fw.write(SEPARATOR);
         fw.flush();
         }catch (IOException e){

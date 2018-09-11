@@ -9,7 +9,7 @@ when
 then
 $cus.setVip(false);
  update($cus)
- System.out.println($cus.getName()+"is the person i want is vip from register");
+ System.out.println($cus.getName()+" is the person i want is vip from register");
  end
 
 rule "login2"

@@ -34,9 +34,10 @@ public class TestController {
 
     @RequestMapping("/demo")
     @ResponseBody
-    public void demo(@RequestBody DroolsData droolsData){
+    public String demo(@RequestBody DroolsData droolsData){
         DrlFileUtil.generateDrlFile(droolsData);
         DroolUtil.reload();
+        return "sucess";
     };
 
 
@@ -44,6 +45,7 @@ public class TestController {
     @ResponseBody
     public void testDroolExecution(){
         Customer customer=new Customer();
+        customer.setName("login session : ");
         customer.setVip(true);
         customer.setDeposit(30002.0);
         customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
@@ -53,7 +55,12 @@ public class TestController {
     @RequestMapping("/testDroolSession")
     @ResponseBody
     public void testDroolExecutionBatch(){
-         DroolUtil.reload();
+        Customer customer=new Customer();
+        customer.setName("register session : ");
+        customer.setVip(true);
+        customer.setDeposit(30002.0);
+        customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
+        droolsService.validateByDrools("register",customer);
     }
 
 
