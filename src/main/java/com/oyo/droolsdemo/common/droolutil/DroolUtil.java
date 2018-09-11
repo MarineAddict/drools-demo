@@ -78,8 +78,8 @@ public class DroolUtil {
      * 从当前KieFileSystem种删除掉某个drl
      * @param path
      */
-    public static void deleteFromKieFileSystem(String path){
-        KIEFILESYSTEM.delete(new String[]{});
+    public static void deleteFromKieFileSystem(String... path){
+        KIEFILESYSTEM.delete(path);
     }
 
     /**
