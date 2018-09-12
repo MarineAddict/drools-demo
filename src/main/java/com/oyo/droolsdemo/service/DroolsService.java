@@ -4,6 +4,8 @@ import com.oyo.droolsdemo.common.droolutil.DroolUtil;
 import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author: create by xuqie
  * @description:
@@ -39,4 +41,21 @@ public class DroolsService {
 //        }
 //        return null;
 //    }
+
+    /**
+     * 将对应的drl文件从KieContainer中删除
+     * @param paths
+     */
+    public void deleteFromKieFileSystem(List<String> paths){
+        DroolUtil.deleteFromKieFileSystem(paths);
+    }
+
+    /**
+     * 将对应路径的drl文件加入到KieContainer中
+     */
+    public void addIntoKieFileSystem(String path){
+        DroolUtil.addIntoKieFileSystem(path);
+    }
+
+
     }

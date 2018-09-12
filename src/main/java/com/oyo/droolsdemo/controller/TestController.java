@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author: create by xuqie
  * @description:
@@ -62,6 +65,23 @@ public class TestController {
         customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
         droolsService.validateByDrools("register",customer);
     }
+
+  @RequestMapping("/deleteDrl")
+    @ResponseBody
+    public void testDeleteDrl(){
+        List<String> list=new ArrayList<String>();
+        list.add("src/main/resources/drool/login/login3.drl");
+        droolsService.deleteFromKieFileSystem(list);
+    }
+
+    @RequestMapping("/addDrl")
+    @ResponseBody
+    public void testAddDrl(){
+      String path ="drool/login/login3.drl";
+        droolsService.addIntoKieFileSystem(path);
+    }
+
+
 
 
 
