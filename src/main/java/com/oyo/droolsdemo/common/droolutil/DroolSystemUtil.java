@@ -4,7 +4,6 @@ import lombok.Data;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieFileSystem;
 import org.kie.api.builder.Message;
-import org.kie.api.builder.Results;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
@@ -22,11 +21,11 @@ import java.util.List;
  * @author: create by xuqie
  * @description:
  * @date:2018/9/10
- * Drool的常用操作类
+ * Drool系统的操作类
  */
 @Component
 @Data
-public class DroolUtil {
+public class DroolSystemUtil {
 
     @Autowired
     private KieFileSystem kieFileSystem;

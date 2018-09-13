@@ -2,6 +2,8 @@ package com.oyo.droolsdemo.config.bean.datasource;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author: create by xuqie
@@ -10,6 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * druid 连接池的属性
  */
 @Data
+@Component
 @ConfigurationProperties(prefix = "druid.mysql")
 public class BaseDruid {
 

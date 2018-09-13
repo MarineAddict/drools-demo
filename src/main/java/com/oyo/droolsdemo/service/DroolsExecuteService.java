@@ -1,6 +1,6 @@
 package com.oyo.droolsdemo.service;
 
-import com.oyo.droolsdemo.common.droolutil.DroolUtil;
+import com.oyo.droolsdemo.common.droolutil.DroolSystemUtil;
 import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
 
@@ -8,11 +8,12 @@ import java.util.List;
 
 /**
  * @author: create by xuqie
- * @description:
+ * @description: drool执行相关service
+ *
  * @date:2018/9/5
  */
 @Service
-public class DroolsService {
+public class DroolsExecuteService {
 
     /**
      *
@@ -21,7 +22,7 @@ public class DroolsService {
      * @param obj 传入的Fact对象
      */
     public void validateByDrools(String kieSessionName,Object obj){
-        KieSession ksession = DroolUtil.getKieSession(kieSessionName);
+        KieSession ksession = DroolSystemUtil.getKieSession(kieSessionName);
         ksession.insert(obj);
         ksession.fireAllRules();
         ksession.dispose();
@@ -47,14 +48,14 @@ public class DroolsService {
      * @param paths
      */
     public void deleteFromKieFileSystem(List<String> paths){
-        DroolUtil.deleteFromKieFileSystem(paths);
+        DroolSystemUtil.deleteFromKieFileSystem(paths);
     }
 
     /**
      * 将对应路径的drl文件加入到KieContainer中
      */
     public void addIntoKieFileSystem(String path){
-        DroolUtil.addIntoKieFileSystem(path);
+        DroolSystemUtil.addIntoKieFileSystem(path);
     }
 
 

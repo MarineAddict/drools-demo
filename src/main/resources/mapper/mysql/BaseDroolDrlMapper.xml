@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oyo.droolsdemo.mapper.mysql.BaseDroolDrlMapper" >
+  <resultMap id="BaseResultMap" type="com.oyo.droolsdemo.entity.drool.DataBaseDroolDrl" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="package_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="import_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="rule" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="when_exp" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="then_exp" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="drl_root" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="comments" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, package_desc, import_desc, rule, when_exp, then_exp, drl_root, comments, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from drl_base_drool
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from drl_base_drool
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.oyo.droolsdemo.entity.drool.DataBaseDroolDrl" >
+    insert into drl_base_drool (id, package_desc, import_desc, 
+      rule, when_exp, then_exp, 
+      drl_root, comments, create_time, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{packageDesc,jdbcType=VARCHAR}, #{importDesc,jdbcType=VARCHAR}, 
+      #{rule,jdbcType=VARCHAR}, #{whenExp,jdbcType=VARCHAR}, #{thenExp,jdbcType=VARCHAR}, 
+      #{drlRoot,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.oyo.droolsdemo.entity.drool.DataBaseDroolDrl" >
+    update drl_base_drool
+    <set >
+      <if test="packageDesc != null" >
+        package_desc = #{packageDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="importDesc != null" >
+        import_desc = #{importDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="rule != null" >
+        rule = #{rule,jdbcType=VARCHAR},
+      </if>
+      <if test="whenExp != null" >
+        when_exp = #{whenExp,jdbcType=VARCHAR},
+      </if>
+      <if test="thenExp != null" >
+        then_exp = #{thenExp,jdbcType=VARCHAR},
+      </if>
+      <if test="drlRoot != null" >
+        drl_root = #{drlRoot,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

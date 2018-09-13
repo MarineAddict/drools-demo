@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * @author: create by xuqie
- * @description:
+ * @description: drool基础数据实体，所有的写文件，流都使用此实体
  * @date:2018/9/4
  */
 @Data
@@ -42,15 +42,16 @@ public class DroolsData implements Serializable {
         this.end = "end";
     }
 
-    public String getImportTile() {
+    public String getImportTileInFile() {
         return "import "+importTile;
     }
+
 
     public void setImportTile(String importTile) {
         this.importTile = importTile;
     }
 
-    public String getRule() {
+    public String getRuleTitle() {
         return "rule \""+rule+"\"";
     }
 

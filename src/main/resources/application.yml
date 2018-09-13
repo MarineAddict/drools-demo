@@ -20,7 +20,7 @@ file:
 #Mysql数据源配置
 druid:
   mysql:
-    url: jdbc:mysql://oyo-dev-database.mysql.rds.aliyuncs.com:3306/product?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://10.26.12.36:3306/oyo-drools?useUnicode=true&characterEncoding=utf8
     driver-class: com.mysql.jdbc.Driver
     userName: root
     password: root

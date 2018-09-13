@@ -1,5 +1,6 @@
 package com.oyo.droolsdemo.config;
 
+import com.oyo.droolsdemo.common.datasourceutil.DataSourceUtils;
 import com.oyo.droolsdemo.config.bean.datasource.BaseDruid;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.plugin.Interceptor;
@@ -22,7 +23,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableConfigurationProperties(BaseDruid.class)
-@MapperScan(basePackages = "mapper.mysql",sqlSessionFactoryRef = "")
+@MapperScan(basePackages = "com.oyo.droolsdemo.mapper.mysql",sqlSessionFactoryRef = "mysqlSqlSessionFactory")
 @Slf4j
 public class MySQLDataSourceConfig {
 
@@ -31,7 +32,7 @@ public class MySQLDataSourceConfig {
 
     @Bean(name = "mysqlDataSource")
     public DataSource mysqlDataSource() {
-        return null;
+        return DataSourceUtils.getDataSource(baseDruid);
     }
 
 
@@ -41,24 +42,17 @@ public class MySQLDataSourceConfig {
         bean.setDataSource(mysqlDataSource());
         //添加实体类路径
         bean.setTypeAliasesPackage("com.oyo.droolsdemo.entity.drool");
-        try {
-            return bean.getObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
 //        //添加插件
 //        PageHelper pageHelper = MybatisUtils.getPageHelper();
 //        bean.setPlugins(new Interceptor[]{pageHelper});
-
-//        //添加XML目录
-//        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-//        try {
-//            bean.setMapperLocations(resolver.getResources(Constants.MAPPER_MYSQL_XML_PATH));
-//            return bean.getObject();
-//        } catch (Exception e) {
-//            log.error("build mysql SqlSessionFactory has error !");
-//            throw new RuntimeException(e);
-//        }
+        //添加XML目录
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        try {
+            bean.setMapperLocations(resolver.getResources("classpath:mapper/mysql/*.xml"));
+            return bean.getObject();
+        } catch (Exception e) {
+            log.error("build mysql SqlSessionFactory has error !");
+            throw new RuntimeException(e);
+        }
     }
 }

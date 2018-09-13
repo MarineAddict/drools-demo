@@ -1,10 +1,11 @@
 package com.oyo.droolsdemo.controller;
 
-import com.oyo.droolsdemo.common.droolutil.DrlFileUtil;
-import com.oyo.droolsdemo.common.droolutil.DroolUtil;
+import com.oyo.droolsdemo.common.droolutil.DrlFileGeneratorUtil;
+import com.oyo.droolsdemo.common.droolutil.DroolSystemUtil;
 import com.oyo.droolsdemo.entity.model.Customer;
 import com.oyo.droolsdemo.entity.request.DroolsData;
-import com.oyo.droolsdemo.service.DroolsService;
+import com.oyo.droolsdemo.service.DroolService;
+import com.oyo.droolsdemo.service.DroolsExecuteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +26,14 @@ public class TestController {
 
 
     @Autowired
-    private DroolsService droolsService;
+    private DroolsExecuteService droolsExecuteService;
+    @Autowired
+    private DroolService droolService;
+
+
 
     @Autowired
-    private DroolUtil droolUtil;
+    private DroolSystemUtil droolSystemUtil;
 
     @RequestMapping("/index")
     public String index(){
@@ -38,8 +43,8 @@ public class TestController {
     @RequestMapping("/demo")
     @ResponseBody
     public String demo(@RequestBody DroolsData droolsData){
-        DrlFileUtil.generateDrlFile(droolsData);
-        DroolUtil.reloadAll();
+        DrlFileGeneratorUtil.generateDrlFile(droolsData);
+        DroolSystemUtil.reloadAll();
         return "sucess";
     };
 
@@ -52,7 +57,7 @@ public class TestController {
         customer.setVip(true);
         customer.setDeposit(30002.0);
         customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
-        droolsService.validateByDrools("login",customer);
+        droolsExecuteService.validateByDrools("login",customer);
     }
 
     @RequestMapping("/testDroolSession")
@@ -63,7 +68,7 @@ public class TestController {
         customer.setVip(true);
         customer.setDeposit(30002.0);
         customer.setComsumptionLevel(Customer.ComsumptionLevel.HIGH);
-        droolsService.validateByDrools("register",customer);
+        droolsExecuteService.validateByDrools("register",customer);
     }
 
   @RequestMapping("/deleteDrl")
@@ -71,16 +76,21 @@ public class TestController {
     public void testDeleteDrl(){
         List<String> list=new ArrayList<String>();
         list.add("src/main/resources/drool/login/login3.drl");
-        droolsService.deleteFromKieFileSystem(list);
+        droolsExecuteService.deleteFromKieFileSystem(list);
     }
 
     @RequestMapping("/addDrl")
     @ResponseBody
     public void testAddDrl(){
       String path ="drool/login/login3.drl";
-        droolsService.addIntoKieFileSystem(path);
+        droolsExecuteService.addIntoKieFileSystem(path);
     }
 
+    @RequestMapping("/testDrlFile")
+    @ResponseBody
+    public void testDrlFile(@RequestBody DroolsData droolsData){
+        droolService.insertNewDrl(droolsData);
+    }
 
 
 
