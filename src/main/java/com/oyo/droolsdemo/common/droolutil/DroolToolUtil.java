@@ -2,6 +2,7 @@ package com.oyo.droolsdemo.common.droolutil;
 
 import com.oyo.droolsdemo.entity.drool.DataBaseDroolDrl;
 import com.oyo.droolsdemo.entity.request.DroolsData;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -35,7 +36,11 @@ public class DroolToolUtil {
      */
     public static DataBaseDroolDrl transferToDBDroolsData(DroolsData droolsData){
         DataBaseDroolDrl dataBaseDroolDrl=new DataBaseDroolDrl();
-        dataBaseDroolDrl.setId(UUID.randomUUID().toString().replace("-",""));
+        if(droolsData.getId()==null){
+            dataBaseDroolDrl.setId(UUID.randomUUID().toString().replace("-",""));
+        }else{
+            dataBaseDroolDrl.setId(droolsData.getId());
+        }
         dataBaseDroolDrl.setComments(droolsData.getComments());
         dataBaseDroolDrl.setPackageDesc(droolsData.getPackage());
         dataBaseDroolDrl.setRule(droolsData.getRule());

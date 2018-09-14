@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Data
 public class DroolsData implements Serializable {
 
+    private  String id;
+
     private String packageTitle;
 
     private String importTile;
