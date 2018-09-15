@@ -79,10 +79,11 @@ public class DroolSystemUtil {
         //静态部分全部更新到最新的状态
         KIESERVICES=kieServices;
         KIEFILESYSTEM=kieFileSystem;
-        KIECONTAINER =kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
+//        KIECONTAINER =kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
+        KIECONTAINER.updateToVersion(kieServices.getRepository().getDefaultReleaseId());
     }
 
-    public static void reloadFile(String fileRoot,Resource re){
+    public static void loadFile(String fileRoot,Resource re){
         KIEFILESYSTEM.write(fileRoot,re);
     }
 
@@ -137,7 +138,7 @@ public class DroolSystemUtil {
        if(results.size()>0){
            System.out.println(results);
        }
-        KIECONTAINER=KIESERVICES.newKieContainer(KIESERVICES.getRepository().getDefaultReleaseId());
+        KIECONTAINER.updateToVersion(KIESERVICES.getRepository().getDefaultReleaseId());
     }
 
 }

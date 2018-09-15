@@ -31,3 +31,7 @@ druid:
     #最大连接数
     max-active: 20
     test-on-borrow: true
+
+drool:
+  #保存drl文件的根目录
+  baseFileRoot: drool

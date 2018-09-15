@@ -1,9 +1,0 @@
-// 
-package drool.login
-import com.oyo.droolsdemo.entity.model.*
-rule " login3"
-when 
-	 $cus: Customer(vip==false,comsumptionLevel==Customer.ComsumptionLevel.HIGH)
-then 
-	System.out.println($cus.getName()+"is the person i want is vip!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-end

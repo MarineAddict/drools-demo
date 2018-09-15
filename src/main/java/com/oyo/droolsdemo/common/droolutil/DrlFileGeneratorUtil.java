@@ -1,5 +1,6 @@
 package com.oyo.droolsdemo.common.droolutil;
 
+import com.oyo.droolsdemo.entity.drool.DataBaseDroolDrl;
 import com.oyo.droolsdemo.entity.request.DroolsData;
 import org.springframework.util.ResourceUtils;
 
@@ -19,11 +20,6 @@ public class DrlFileGeneratorUtil {
     public final static String SEPARATOR = System.getProperty("line.separator");
     public final static String BLANK ="\b";
 
-    private static String baseRoot;
-
-    static {
-        baseRoot=  DrlFileGeneratorUtil.class.getClassLoader().getResource("").getPath();
-    }
 
 
     /**
@@ -33,7 +29,6 @@ public class DrlFileGeneratorUtil {
      * @param
      */
     public static String generateDrlFile(DroolsData droolsData)  {
-
         // 文件的rule 名称判断
         if(droolsData.getRule()==null||"".equals(droolsData.getRule())){
             return "EMPTY NAME IS INVALID";
@@ -62,6 +57,7 @@ public class DrlFileGeneratorUtil {
     }
 
     private static String getFilePath(DroolsData droolsData) {
+        String baseRoot=DrlFileGeneratorUtil.class.getClassLoader().getResource("").getPath();
       return   baseRoot+"/"+droolsData.getPackage()
               .replaceAll("\\.","\\/")+"/"+droolsData.getDroolFileName()+".drl";
     }
@@ -93,6 +89,33 @@ public class DrlFileGeneratorUtil {
         }
     }
 
-//    public static String writed
+    /**
+     * 将DataBaseDrl对象写成一个String字符串
+     * @param droolsData
+     * @return
+     */
+    public static String generateDrlFileString(DataBaseDroolDrl droolsData){
+        StringBuilder sb=new StringBuilder();
+        sb.append("// ")
+                .append(droolsData.getComments().trim())
+                .append(SEPARATOR)
+                .append("package "+droolsData.getPackageDesc().trim())
+                .append(SEPARATOR)
+                .append("import "+droolsData.getImportDesc().trim())
+                .append(SEPARATOR)
+                .append("rule \""+droolsData.getRule().trim()+"\"")
+                .append(SEPARATOR)
+                .append("when")
+                .append(SEPARATOR)
+                .append(droolsData.getWhenExp().trim())
+                .append(SEPARATOR)
+                .append("then")
+                .append(droolsData.getThenExp().trim())
+                .append(SEPARATOR)
+                .append("end")
+                .append(SEPARATOR);
+        return sb.toString();
+    }
+
 
 }

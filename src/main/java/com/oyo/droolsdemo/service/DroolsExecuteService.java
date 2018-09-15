@@ -56,6 +56,7 @@ public class DroolsExecuteService {
      */
     public void addIntoKieFileSystem(String path){
         DroolSystemUtil.addIntoKieFileSystem(path);
+        DroolSystemUtil.refreshContainer();
     }
 
 

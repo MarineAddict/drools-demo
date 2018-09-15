@@ -88,8 +88,8 @@ public class TestController {
 
     @RequestMapping("/testDrlFile")
     @ResponseBody
-    public void testDrlFile(@RequestBody DroolsData droolsData){
-        droolService.insertNewDrl(droolsData);
+    public List testDrlFile(@RequestBody DroolsData droolsData){
+        return droolService.selectAllDrools();
     }
 
 

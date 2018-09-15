@@ -11,8 +11,8 @@
       <arg column="then_exp" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="drl_root" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="comments" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -25,6 +25,14 @@
     from drl_base_drool
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectAllDrools" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drl_base_drool
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from drl_base_drool
     where id = #{id,jdbcType=VARCHAR}

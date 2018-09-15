@@ -9,6 +9,8 @@ import com.oyo.droolsdemo.mapper.mysql.BaseDroolDrlMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author: create by xuqie
  * @description: base数据库的增删改
@@ -38,11 +40,12 @@ public class DroolService {
         }catch (Exception e){
             throw new RuntimeException(DroolsDataBaseResponseCode.DROOL_DATABASE_ERROR.getResponseText());
         }
-
     }
 
 
-
+   public List<DataBaseDroolDrl> selectAllDrools(){
+      return  baseDroolDrlMapper.selectAllDrools();
+   }
 
 
 

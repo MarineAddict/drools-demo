@@ -11,6 +11,7 @@ import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.conf.ClockTypeOption;
 import org.kie.internal.io.ResourceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,13 +28,16 @@ import java.util.List;
 @Configuration
 public class DroolInitConfig {
 
+    @Value("${drool.baseFileRoot}")
+    private  String baseRoot;
     /**
      * 记录所有的Kbase的List，resource下的drool文件夹下的package即为一个Kbase的名称
      */
     private List<String> kieBaseList=new ArrayList<String>();
-    String  scanRoot = this.getClass().getClassLoader().getResource("drool").getPath();
+
     @Autowired
     private KieServices kieServices;
+
 
 
     @Bean
@@ -49,8 +53,9 @@ public class DroolInitConfig {
      * 外部通过得到这个Bean 调用 newContainer方法就可以得到经过配置后的一个KieContainer
      * @return
      */
-    @Bean
+    @Bean(name = "kieFileSystem")
     public KieFileSystem kieFileSystem(){
+        String  scanRoot = this.getClass().getClassLoader().getResource(baseRoot).getPath();
         //create a Kmodule
         KieModuleModel kieModuleModel = kieServices.newKieModuleModel();
         insertKieBase(scanRoot);
@@ -103,7 +108,6 @@ public class DroolInitConfig {
                configKieSession(baseModel,baseName);
             }
         }
-
     }
 
     /**
