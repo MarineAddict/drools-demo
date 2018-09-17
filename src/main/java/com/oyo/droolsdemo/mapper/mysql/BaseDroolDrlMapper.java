@@ -1,6 +1,7 @@
 package com.oyo.droolsdemo.mapper.mysql;
 
 import com.oyo.droolsdemo.entity.drool.DataBaseDroolDrl;
+import com.oyo.droolsdemo.pagination.Pagination;
 
 import java.util.List;
 
@@ -14,6 +15,6 @@ public interface BaseDroolDrlMapper {
 
     int updateByPrimaryKeySelective(DataBaseDroolDrl record);
 
-    List<DataBaseDroolDrl> selectAllDrools(List);
+    List<DataBaseDroolDrl> selectAllDrools(Pagination page);
 
 }

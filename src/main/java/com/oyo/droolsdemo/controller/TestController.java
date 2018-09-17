@@ -4,6 +4,7 @@ import com.oyo.droolsdemo.common.droolutil.DrlFileGeneratorUtil;
 import com.oyo.droolsdemo.common.droolutil.DroolSystemUtil;
 import com.oyo.droolsdemo.entity.model.Customer;
 import com.oyo.droolsdemo.entity.request.DroolsData;
+import com.oyo.droolsdemo.pagination.Pagination;
 import com.oyo.droolsdemo.service.DroolService;
 import com.oyo.droolsdemo.service.DroolsExecuteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +89,10 @@ public class TestController {
 
     @RequestMapping("/testDrlFile")
     @ResponseBody
-    public List testDrlFile(@RequestBody DroolsData droolsData){
-        return droolService.selectAllDrools();
+    public List testDrlFile(@RequestBody Pagination page){
+
+         droolService.selectAllDrools(page);
+         return null;
     }
 
 

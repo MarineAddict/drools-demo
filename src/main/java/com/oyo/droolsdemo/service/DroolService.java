@@ -4,8 +4,8 @@ import com.oyo.droolsdemo.common.constant.DroolsDataBaseResponseCode;
 import com.oyo.droolsdemo.common.droolutil.DroolToolUtil;
 import com.oyo.droolsdemo.entity.drool.DataBaseDroolDrl;
 import com.oyo.droolsdemo.entity.request.DroolsData;
-import com.oyo.droolsdemo.exception.DrlDataBaseException;
 import com.oyo.droolsdemo.mapper.mysql.BaseDroolDrlMapper;
+import com.oyo.droolsdemo.pagination.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +43,8 @@ public class DroolService {
     }
 
 
-   public List<DataBaseDroolDrl> selectAllDrools(){
-      return  baseDroolDrlMapper.selectAllDrools();
+   public List<DataBaseDroolDrl> selectAllDrools(Pagination page){
+      return  baseDroolDrlMapper.selectAllDrools(page);
    }
 
 

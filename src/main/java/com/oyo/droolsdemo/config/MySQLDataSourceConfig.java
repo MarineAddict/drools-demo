@@ -2,6 +2,7 @@ package com.oyo.droolsdemo.config;
 
 import com.oyo.droolsdemo.common.datasourceutil.DataSourceUtils;
 import com.oyo.droolsdemo.config.bean.datasource.BaseDruid;
+import com.oyo.droolsdemo.interceptors.MyBatisInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -42,6 +43,7 @@ public class MySQLDataSourceConfig {
         bean.setDataSource(mysqlDataSource());
         //添加实体类路径
         bean.setTypeAliasesPackage("com.oyo.droolsdemo.entity.drool");
+        bean.setPlugins(new MyBatisInterceptor[]{new MyBatisInterceptor()});
 //        //添加插件
 //        PageHelper pageHelper = MybatisUtils.getPageHelper();
 //        bean.setPlugins(new Interceptor[]{pageHelper});
